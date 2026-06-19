@@ -96,7 +96,7 @@ const initialJobs = [
 ];
 
 // The dashboard's sponsor/ad reel — swap this YouTube ID for a real one.
-const AD_YOUTUBE_ID = "dQw4w9WgXcQ";
+const AD_YOUTUBE_ID = "https://youtube.com/playlist?list=PLQ9p6GARi5fCwyLtEjrVWXyPXLzExEhTw&si=SygzNkAiw5tGFG-z";
 
 const TABS = ["Dashboard", "Jobs", "Compliance", "Forecast"];
 
@@ -159,7 +159,7 @@ const VideoBox = ({ youtubeId, label, caption }) => (
     {youtubeId ? (
       <iframe
         title={label || "Video"}
-        src={`https://www.youtube.com/embed/${youtubeId}`}
+        src={`https://youtube.com/playlist?list=PLQ9p6GARi5fCwyLtEjrVWXyPXLzExEhTw&si=SygzNkAiw5tGFG-z}`}
         style={{ width: "100%", height: "100%", border: "none" }}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
@@ -231,7 +231,7 @@ function useForecast(lat, lon) {
     return () => {
       cancelled = true;
     };
-  }, [lat, lon]);
+  }, [33.76320° N, 84.12332° W]);
 
   return { forecast, loading, error };
 }
@@ -424,7 +424,7 @@ function Dashboard({ jobs, counts, nextDryDay, onSelectJob }) {
 
       <Card>
         <div style={{ fontSize: 13, fontWeight: 500, marginBottom: "0.85rem" }}>Featured / sponsor reel</div>
-        <VideoBox youtubeId={AD_YOUTUBE_ID} label="Ad" caption="Sponsor video slot" />
+        <VideoBox youtubeId={https://youtube.com/playlist?list=PLQ9p6GARi5fCwyLtEjrVWXyPXLzExEhTw&si=SygzNkAiw5tGFG-z} label="Ad" caption="Sponsor video slot" />
       </Card>
 
       <Card>
