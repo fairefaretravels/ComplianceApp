@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Ops — Request a Quote</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1b17;
+    --paper: #f5f3ec;
+    --card: #ffffff;
+    --border: #ddd8c9;
+    --accent: #b23a2e;
+    --accent-soft: #f3e0dd;
+    --green: #3f6b3f;
+    --green-soft: #e3ede0;
+    --muted: #6b6757;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 2.5rem 1.25rem;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
+  .masthead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .masthead h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.01em; }
+  .masthead .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5rem; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+  }
+  .card h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.35rem; }
+  .card .sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+
+  label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+  .field { margin-bottom: 1rem; }
+  input, select, textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.92rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  textarea { resize: vertical; min-height: 90px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+  .submit-btn {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .submit-btn:hover { opacity: 0.85; }
+  .submit-btn:disabled { opacity: 0.5; cursor: default; }
+
+  .status-msg {
+    margin-top: 0.85rem;
+    font-size: 0.85rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    display: none;
+  }
+  .status-msg.success { display: block; background: var(--green-soft); color: var(--green); }
+  .status-msg.error { display: block; background: var(--accent-soft); color: var(--accent); }
+
+  .video-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #2a2820;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+  }
+  .video-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .video-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #c9c4ae; }
+  .video-placeholder .play { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid #c9c4ae; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .video-label {
+    position: absolute; top: 10px; left: 10px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+    background: rgba(255,255,255,0.92); color: var(--ink); padding: 3px 9px; border-radius: 20px;
+  }
+  .video-caption { font-size: 0.8rem; color: var(--muted); margin-top: 0.6rem; }
+
+  .trust-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
+  .trust-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <h1>Request a quote</h1>
+    <span class="tag">Field Ops &middot; Decking &middot; Roofing &middot; Electrical</span>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>Tell us about the job</h2>
+      <p class="sub">We'll follow up within one business day. Compliance and weather scheduling are handled automatically once your job is booked.</p>
+
+      <form id="inquiry-form" action="https://formspree.io/f/mdavqlae" method="POST">
+        <div class="row2">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="trade">Trade needed</label>
+            <select id="trade" name="trade" required>
+              <option value="">Select...</option>
+              <option value="decking">Decking</option>
+              <option value="roofing">Roofing</option>
+              <option value="electrical">Electrical</option>
+              <option value="multiple">Multiple trades</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="address">Job address</label>
+            <input id="address" name="address" type="text" placeholder="Street, city">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">What needs to get done</label>
+          <textarea id="message" name="message" placeholder="Describe the job, timeline, and anything you already know about permits or prior work." required></textarea>
+        </div>
+
+        <input type="hidden" name="_subject" value="New Field Ops job inquiry">
+
+        <button type="submit" class="submit-btn" id="submit-btn">Submit inquiry</button>
+        <div class="status-msg" id="status-msg"></div>
+      </form>
+
+      <div class="trust-row">
+        <span class="trust-chip">Licensed crews</span>
+        <span class="trust-chip">Permit tracked</span>
+        <span class="trust-chip">Weather-aware scheduling</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>See us on a job</h2>
+      <p class="sub">Recent work and what to expect when we're on site.</p>
+
+      <div class="video-box">
+        <span class="video-label">Featured</span>
+        <div class="video-placeholder">
+          <div class="play">&#9658;</div>
+          <span style="font-size: 0.78rem;">Job + sponsor reel</span>
+        </div>
+        <!-- Replace the placeholder above with an actual video once you have footage, e.g.:
+        <video controls poster="/path/to/poster.jpg">
+          <source src="/path/to/reel.mp4" type="video/mp4">
+        </video>
+        -->
+      </div>
+      <p class="video-caption">Recent decking, roofing, and electrical jobs — plus a quick look at how the compliance and scheduling system works on site.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const form = document.getElementById('inquiry-form');
+const submitBtn = document.getElementById('submit-btn');
+const statusMsg = document.getElementById('status-msg');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+  statusMsg.className = 'status-msg';
+  statusMsg.textContent = '';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      statusMsg.className = 'status-msg success';
+      statusMsg.textContent = "Thanks — we've got your request and will follow up within one business day.";
+      form.reset();
+      submitBtn.textContent = 'Submit inquiry';
+    } else {
+      throw new Error('Form submission failed');
+    }
+  } catch (err) {
+    statusMsg.className = 'status-msg error';
+    statusMsg.textContent = "Something went wrong sending that. Please try again, or call us directly.";
+    submitBtn.textContent = 'Submit inquiry';
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
